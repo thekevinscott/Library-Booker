@@ -32,6 +32,9 @@ var libraryBooker;
             book_author = $(tr).find(html_attributes.book_title_search_string).html();
             book_title = $(tr).find(html_attributes.book_author_search_string).html();
             add_to_library_button = $('<a href="javascript:;">add to library</a>');
+            add_to_library_button.click(function(){
+               chrome.extension.
+            });
             $(_this).parent().before(add_to_library_button);
          });
 

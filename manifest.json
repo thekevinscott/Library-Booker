@@ -4,7 +4,8 @@
 
     "permissions": [
       "http://catalog.einetwork.net/*",
-      "http://www.goodreads.com/"
+      "http://www.goodreads.com/",
+      "tabs"
       
     ],
 
