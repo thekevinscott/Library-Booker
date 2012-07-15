@@ -3,10 +3,10 @@ var libraryBooker;
 (function($){
    libraryBooker = function(){
       //// functions
-      var l, goodreads, createLibraryUrl;
+      var l, goodreads, createLibraryUrl, library_functions;
       
       //// variables
-      var debug, html_attributes, library_url, styles;
+      var debug, html_attributes, library_url, styles, user_defaults;
       
       //// settings
       debug = true;
@@ -18,9 +18,31 @@ var libraryBooker;
       };
       styles = {
          'add_to_library' : 'position: absolute;margin-left: -98px;padding: 4px 10px 5px 10px;border: 1px solid #ceccbd;background: #edebdc; color : #382110;'
+      };
+      user_defaults = {
+         card_number : localStorage['card_number'],
+         pin : localStorage['pin']
       }
       
       l = function(msg) {if (debug && window['console']) { console.log(msg); }}
+      
+      library_functions = {
+         'catalog.einetwork.net' : function() {
+            switch(window.location.pathname) {
+               case "/patroninfo~S1" :
+                  // login screen
+                  var login_form, card_number, pin;
+                  $(document).ready(function(){
+                     login_form = $('form');
+                     card_number = login_form.find('input[name=code]');
+                     pin = login_form.find('input[name=pin]');
+                     card_number.val()
+                  });
+               break;
+            }
+            
+         }
+      };
       
       createLibraryUrl = function(params)
       {
@@ -28,7 +50,7 @@ var libraryBooker;
          switch(library_url)
          {
             case "http://catalog.einetwork.net/search/" : 
-               return "http://catalog.einetwork.net/search/a?searchtype=Y&searcharg="+book_title+"&SORT=D&searchscope=1&submit=Search";
+               return "http://catalog.einetwork.net/search~S1/?searchtype=t&searcharg="+book_title+"";
             break;
          }
       }
@@ -64,6 +86,11 @@ var libraryBooker;
       switch(window.location.hostname) {
          case 'www.goodreads.com' :
             goodreads();
+         break;
+         default :
+            if (library_functions[window.location.hostname]) {
+               library_functions[window.location.hostname]();
+            }
          break;
       }
       return {
