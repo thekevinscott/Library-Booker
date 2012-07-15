@@ -6,7 +6,7 @@ var libraryBooker;
       var l, goodreads;
       
       //// variables
-      var debug, html_attributes, library_url;
+      var debug, html_attributes, library_url, styles;
       
       //// settings
       debug = true;
@@ -16,6 +16,9 @@ var libraryBooker;
          'book_title_search_string' : "a.bookTitle span",
          'book_author_search_string' : "a.authorName span",
       };
+      styles = {
+         'add_to_library' : 'position: absolute;margin-left: -96px;padding: 4px 10px 5px 10px;border: 1px solid #ceccbd;background: #edebdc;';
+      }
       
       l = function(msg) {if (debug && window['console']) { console.log(msg); }}
       
@@ -29,7 +32,7 @@ var libraryBooker;
             tr = $(_this).parents('tr');
             book_author = $(tr).find(html_attributes.book_title_search_string).html();
             book_title = $(tr).find(html_attributes.book_author_search_string).html();
-            add_to_library_button = $('<a href="javascript:;">add to library</a>');
+            add_to_library_button = $('<a href="javascript:;" class="addToLibrary" style="'+styles.add_to_library+'">add to library</a>');
             add_to_library_button.click(function(){
                chrome.tabs.create({url : library_url}, function(){
                   l('tab created');
@@ -39,7 +42,6 @@ var libraryBooker;
             $(_this).parent().before(add_to_library_button);
          });
 
-         console.log(addMyBook);
       };
       
 
