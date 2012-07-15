@@ -12,7 +12,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse)
 	      var book_title = request.book_title;
 	      
 	      chrome.tabs.create({url : url}, function(tab) {
-	         alert('new tab!');
+	         //alert('new tab!');
 	      });
 	   break;
 	}
