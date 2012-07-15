@@ -6,17 +6,15 @@ var libraryBooker;
       var l, goodreads;
       
       //// variables
-      var debug, html_attributes;
+      var debug, html_attributes, library_url;
       
       //// settings
       debug = true;
+      library_url = "http://catalog.einetwork.net/search/";
       html_attributes = {
          'add_my_book_search_string' : "http://www.goodreads.com/assets/layout/addMyBookbutton.jpg",
          'book_title_search_string' : "a.bookTitle span",
          'book_author_search_string' : "a.authorName span",
-         
-         
-         
       };
       
       l = function(msg) {if (debug && window['console']) { console.log(msg); }}
@@ -33,7 +31,10 @@ var libraryBooker;
             book_title = $(tr).find(html_attributes.book_author_search_string).html();
             add_to_library_button = $('<a href="javascript:;">add to library</a>');
             add_to_library_button.click(function(){
-               chrome.extension.
+               chrome.tabs.create({url : library_url}, function(){
+                  l('tab created');
+               });
+               
             });
             $(_this).parent().before(add_to_library_button);
          });
