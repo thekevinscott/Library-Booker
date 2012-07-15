@@ -3,7 +3,7 @@ var libraryBooker;
 (function($){
    libraryBooker = function(){
       //// functions
-      var l, goodreads, createLibraryUrl, library_functions;
+      var l, goodreads, createLibraryUrl, library_functions, save;
       
       //// variables
       var debug, html_attributes, library_url, styles, user_defaults;
@@ -21,10 +21,17 @@ var libraryBooker;
       };
       user_defaults = {
          card_number : localStorage['card_number'],
-         pin : localStorage['pin']
+         pin : localStorage['pin'],
+         pickup_location : localStorage['pickup_location'],         
       }
       
       l = function(msg) {if (debug && window['console']) { console.log(msg); }}
+      
+      save = function(key,val)
+      {
+         localStorage[key] = val;
+         user_defaults[key] = localStorage[key];
+      }
       
       library_functions = {
          'catalog.einetwork.net' : function() {
@@ -33,16 +40,43 @@ var libraryBooker;
                   // login screen
                   var login_form, card_number, pin;
                   $(document).ready(function(){
-                     if (user_defaults && user_defaults.card_number && user_defaults.pin) {
+                     login_form = $('form');
+                     card_number = login_form.find('input[name=code]');
+                     pin = login_form.find('input[name=pin]');
+                     
+                     if (login_form.length && card_number.length && pin.length && user_defaults && user_defaults.card_number && user_defaults.pin) {
                         
-                        login_form = $('form');
-                        card_number = login_form.find('input[name=code]');
-                        pin = login_form.find('input[name=pin]');
                         card_number.val(user_defaults.card_number);
                         pin.val(user_defaults.pin);
-                        $(login_form).submit();
+                        //$(login_form).submit();
                      }
                   });
+               break;
+               case "/search~S1" :
+                  // check that this is the reserve screen
+                  var pickup_location, month, day, year;
+                  pickup_location   = $('select[name=locx00]');
+                  month             = $('select[name=needby_Month]');
+                  day               = $('select[name=needby_Day]');
+                  year              = $('select[name=needby_Year]');
+                  
+                  $.each([pickup_location, month, day, year],function(){
+                     var field = this;
+                     var name = $(this).attr('name');
+                     if (field.length) {
+                        $(field).change(function(){
+                           save(name,$(this).val());
+                        });
+
+                        if (user_defaults[name]) {
+                           field.val(user_defaults[name]);
+                        }
+
+                     }
+                  });
+                  
+                  
+                  // reserve screen
                break;
             }
             
