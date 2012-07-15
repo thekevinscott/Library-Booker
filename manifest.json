@@ -1,0 +1,30 @@
+{
+
+    "name"              : "Library Booker",
+
+    "permissions": [
+      "http://catalog.einetwork.net/*",
+      "http://www.goodreads.com/"
+      
+    ],
+
+
+    "version"           : "2012.7.15",
+
+    "description"       : "Browse Books on Goodreads, and click a button to reserve them at your local Pittsburgh Library",
+
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+    
+
+
+    "content_scripts": [
+        {
+            "matches": ["*://catalog.einetwork.net/*", "*://www.goodreads.com/*"],
+            "js": [
+                "libraryBooker.js",
+                "jquery.1.7.2.min.js"
+                ]
+        }
+    ],
+    
+}
