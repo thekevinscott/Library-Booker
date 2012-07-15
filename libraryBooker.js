@@ -3,7 +3,7 @@ var libraryBooker;
 (function($){
    libraryBooker = function(){
       //// functions
-      var l, goodreads;
+      var l, goodreads, createLibraryUrl;
       
       //// variables
       var debug, html_attributes, library_url, styles;
@@ -22,9 +22,19 @@ var libraryBooker;
       
       l = function(msg) {if (debug && window['console']) { console.log(msg); }}
       
+      createLibraryUrl = function(params)
+      {
+         var book_title = params.book_title.replace(' ','+');
+         switch(params.library_url)
+         {
+            case "http://catalog.einetwork.net/search/" : 
+               return "http://catalog.einetwork.net/search/a?searchtype=Y&searcharg="+book_title+"&SORT=D&searchscope=1&submit=Search";
+            break;
+         }
+      }
       
       
-      var goodreads = function() {
+      goodreads = function() {
          var add_my_book_buttons, add_to_library_button, tr, book_author, book_title;
          add_my_book_buttons = $('img[src="'+html_attributes.add_my_book_search_string+'"]');
          add_my_book_buttons.each(function(){
@@ -37,9 +47,7 @@ var libraryBooker;
                
                chrome.extension.sendRequest({
                   action: 'open_library',
-                  url : library_url,
-                  book_author : book_author,
-                  book_title : book_title
+                  url : createLibraryUrl({library_url : library_url, book_author : book_author, book_title : book_title)
                });
                
             });

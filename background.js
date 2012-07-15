@@ -1,6 +1,7 @@
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) 
 {
 
+   
 	var sender_tab_id = sender.tab.id;
 	
 	switch(request.action)
