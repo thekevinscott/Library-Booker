@@ -17,7 +17,7 @@ var libraryBooker;
          'book_author_search_string' : "a.authorName span",
       };
       styles = {
-         'add_to_library' : 'position: absolute;margin-left: -96px;padding: 4px 10px 5px 10px;border: 1px solid #ceccbd;background: #edebdc;';
+         'add_to_library' : 'position: absolute;margin-left: -96px;padding: 4px 10px 5px 10px;border: 1px solid #ceccbd;background: #edebdc;'
       }
       
       l = function(msg) {if (debug && window['console']) { console.log(msg); }}
