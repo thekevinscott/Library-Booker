@@ -3,7 +3,7 @@ var libraryBooker;
 (function($){
    libraryBooker = function(){
       //// functions
-      var l, goodreads, createLibraryUrl, library_functions, save;
+      var l, goodreads, createLibraryUrl, library_functions, _save, _get;
       
       //// variables
       var debug, html_attributes, library_url, styles, user_defaults;
@@ -21,16 +21,23 @@ var libraryBooker;
       };
       user_defaults = {
          card_number : localStorage['card_number'],
-         pin : localStorage['pin'],
-         pickup_location : localStorage['pickup_location'],         
+         pin : localStorage['pin']
       }
       
       l = function(msg) {if (debug && window['console']) { console.log(msg); }}
       
-      save = function(key,val)
+      _save = function(key,val)
       {
          localStorage[key] = val;
          user_defaults[key] = localStorage[key];
+      }
+      _get = function(key)
+      {
+         if (user_defaults[key]) { return user_defaults[key]; }
+         else if (localStorage[key]) {
+            user_defaults[key] = localStorage[key];
+            return user_defaults[key];
+         } else { return null; }
       }
       
       library_functions = {
@@ -65,11 +72,12 @@ var libraryBooker;
                      var name = $(this).attr('name');
                      if (field.length) {
                         $(field).change(function(){
-                           save(name,$(this).val());
+                           _save(name,$(this).val());
                         });
 
-                        if (user_defaults[name]) {
-                           field.val(user_defaults[name]);
+                        if (_get(name)) {
+
+                           field.val(_get(name));
                         }
 
                      }
