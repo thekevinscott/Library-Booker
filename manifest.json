@@ -5,11 +5,17 @@
     "permissions": [
       "http://catalog.einetwork.net/*",
       "http://www.goodreads.com/",
-      "tabs"
-      
+      "tabs",
+      "background"
     ],
 
-
+    "background" : {
+      "scripts" : [
+        "jquery.1.7.2.min.js",
+        "background.js"
+      ]
+    },
+    
     "version"           : "2012.7.15",
 
     "description"       : "Browse Books on Goodreads, and click a button to reserve them at your local Pittsburgh Library",
