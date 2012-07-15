@@ -24,7 +24,7 @@ var libraryBooker;
       
       createLibraryUrl = function(params)
       {
-         var book_title = params.book_title.replaceAll(' ','+');
+         var book_title = params.book_title.trim().replace(/\ /g,'+');
          switch(library_url)
          {
             case "http://catalog.einetwork.net/search/" : 
