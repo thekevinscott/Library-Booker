@@ -33,10 +33,15 @@ var libraryBooker;
                   // login screen
                   var login_form, card_number, pin;
                   $(document).ready(function(){
-                     login_form = $('form');
-                     card_number = login_form.find('input[name=code]');
-                     pin = login_form.find('input[name=pin]');
-                     card_number.val()
+                     if (user_defaults && user_defaults.card_number && user_defaults.pin) {
+                        
+                        login_form = $('form');
+                        card_number = login_form.find('input[name=code]');
+                        pin = login_form.find('input[name=pin]');
+                        card_number.val(user_defaults.card_number);
+                        pin.val(user_defaults.pin);
+                        $(login_form).submit();
+                     }
                   });
                break;
             }
