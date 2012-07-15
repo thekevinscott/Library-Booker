@@ -24,8 +24,8 @@ var libraryBooker;
       
       createLibraryUrl = function(params)
       {
-         var book_title = params.book_title.replace(' ','+');
-         switch(params.library_url)
+         var book_title = params.book_title.replaceAll(' ','+');
+         switch(library_url)
          {
             case "http://catalog.einetwork.net/search/" : 
                return "http://catalog.einetwork.net/search/a?searchtype=Y&searcharg="+book_title+"&SORT=D&searchscope=1&submit=Search";
@@ -35,23 +35,26 @@ var libraryBooker;
       
       
       goodreads = function() {
-         var add_my_book_buttons, add_to_library_button, tr, book_author, book_title, library_url;
+         var add_my_book_buttons, add_to_library_button, tr, book_author, book_title, library_search_url;
          add_my_book_buttons = $('img[src="'+html_attributes.add_my_book_search_string+'"]');
          add_my_book_buttons.each(function(){
             var _this = this;
             tr = $(_this).parents('tr');
-            book_author = $(tr).find(html_attributes.book_title_search_string).html();
-            book_title = $(tr).find(html_attributes.book_author_search_string).html();
-            add_to_library_button = $('<a href="javascript:;" class="addToLibrary" style="'+styles.add_to_library+'">add to library</a>');
-            library_url = createLibraryUrl({library_url : library_url, book_author : book_author, book_title : book_title});
+            book_author = $(tr).find(html_attributes.book_author_search_string).html();
+            book_title = $(tr).find(html_attributes.book_title_search_string).html();
+
+            library_search_url = createLibraryUrl({book_author : book_author, book_title : book_title});
+            add_to_library_button = $('<a target="_blank" href="'+library_search_url+'" class="addToLibrary" style="'+styles.add_to_library+'">add to library</a>');
+            /*
             add_to_library_button.click(function(){
                
                chrome.extension.sendRequest({
                   action: 'open_library',
-                  url : library_url
+                  url : library_search_url
                });
                
             });
+            */
             $(_this).parent().before(add_to_library_button);
          });
 
